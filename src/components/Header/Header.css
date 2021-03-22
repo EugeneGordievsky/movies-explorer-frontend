@@ -1,0 +1,105 @@
+.header {
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_main {
+  background-color: #465DFF;
+}
+
+.header__profile-logo {
+  margin: auto 0 auto 17px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 8px 7px;
+}
+
+.header__profile {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  margin-right: 70px;
+}
+
+.header__logo {
+  margin-left: 70px;
+}
+
+.header__link_signin {
+  color: #000000;
+  background-color: #2BE080;
+  padding: 8px 20px;
+  border-radius: 3px;
+}
+
+.header__link {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: #FFFFFF;
+  margin-right: 30px;
+  text-decoration: none;
+}
+
+.header__link:hover {
+  cursor: pointer;
+}
+
+.header__link:last-of-type {
+  margin-right: 0;
+}
+
+.header__button {
+  font-size: 14px;
+  line-height: 18px;
+  color: #000000;
+  margin-right: 30px;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+.header__button:hover {
+  cursor: pointer;
+}
+
+.header__button:last-of-type {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 1279px) {
+  .header__logo {
+    margin-left: 30px;
+  }
+
+  .header__nav {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header__logo {
+    margin-left: 14px;
+  }
+
+  .header__nav {
+    margin-right: 14px;
+  }
+
+  .header__link {
+    font-size: 10px;
+    margin-right: 14px;
+  }
+
+  .header__link_signin {
+    padding: 5px 12px;
+  }
+}

@@ -1,0 +1,141 @@
+.search-form {
+  padding: 70px 0 47px;
+}
+
+.search-form__find {
+  border-bottom: 1px solid #e8e8e8;
+  padding: 0 0 13px;
+  margin: 0 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-form__input {
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 34px;
+  color: #A0A0A0;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.search-form__find-button {
+  background-image: url('../../images/find-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+}
+
+.search-form__find-button:hover {
+  cursor: pointer;
+}
+
+.search-form__short-film {
+  display: flex;
+  margin: 32px 70px 0;
+}
+
+.search-form__checkbox-caption {
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  color: #000000;
+  margin: 0 0 0 14px;
+}
+
+.search-form__tumbler {
+  position: relative;
+  width: 36px;
+  height: 20px;
+}
+
+.search-form__checkbox {
+  width: 0;
+  height: 0;
+}
+
+.search-form__checkbox-label {
+  background-color: #a0a0a0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+}
+
+.search-form__checkbox-label:hover {
+  cursor: pointer;
+}
+
+.search-form__checkbox-label:before {
+  position: absolute;
+  background-color: #fff;
+  content: '';
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.search-form__checkbox:checked + .search-form__checkbox-label {
+  background-color: #2be080;
+}
+
+.search-form__checkbox:checked + .search-form__checkbox-label:before {
+  transform: translateX(16px);
+}
+
+@media screen and (max-width: 1279px) {
+  .search-form {
+    padding: 80px 0 60px;
+  }
+
+  .search-form__find {
+    padding: 0 0 13px;
+    margin: 0 30px;
+  }
+
+  .search-form__short-film {
+    margin: 29px 30px 0;
+    justify-items: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  .search-form__checkbox-caption {
+    margin: 0 14px 0 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .search-form {
+    padding: 90px 0 50px;
+  }
+
+  .search-form__find {
+    padding: 0 0 15px;
+    margin: 0 14px;
+  }
+
+  .search-form__input {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #A0A0A0;
+  }
+
+  .search-form__short-film {
+    width: max-content;
+    margin: 40px auto 0;
+  }
+
+  .search-form__checkbox-caption {
+    font-size: 11px;
+  }
+}
