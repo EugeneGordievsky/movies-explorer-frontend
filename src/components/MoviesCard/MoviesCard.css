@@ -37,6 +37,7 @@
 
 .movies-card__like-button:hover {
   cursor: pointer;
+  background-image: url('../../images/like-icon-active.svg');
 }
 
 .movies-card__like-button_active {

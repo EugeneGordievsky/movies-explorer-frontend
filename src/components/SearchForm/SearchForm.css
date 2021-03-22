@@ -32,6 +32,7 @@
 
 .search-form__find-button:hover {
   cursor: pointer;
+  opacity: .6;
 }
 
 .search-form__short-film {
@@ -56,6 +57,7 @@
 .search-form__checkbox {
   width: 0;
   height: 0;
+  opacity: 0;
 }
 
 .search-form__checkbox-label {

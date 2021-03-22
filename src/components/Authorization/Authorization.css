@@ -29,6 +29,7 @@
 
 .authorization__submit-button:hover {
   cursor: pointer;
+  opacity: .8;
 }
 
 .authorization__logo {
@@ -64,6 +65,10 @@
   font-weight: normal;
   color: #ff6838;
   text-decoration: none;
+}
+
+.authorization__link:hover {
+  opacity: .8;
 }
 
 @media screen and (max-width: 767px) {

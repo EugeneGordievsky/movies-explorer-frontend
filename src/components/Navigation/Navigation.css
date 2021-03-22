@@ -25,6 +25,10 @@
   text-decoration: none;
 }
 
+.navigation__main-link:hover {
+  opacity: .8;
+}
+
 .navigation__main-link_signin {
   color: #000000;
   background: #2BE080;
@@ -39,6 +43,10 @@
   color: #000000;
   text-decoration: none;
   margin: 0;
+}
+
+.navigation__link:hover {
+  opacity: .6;
 }
 
 .navigation__link_profile {
