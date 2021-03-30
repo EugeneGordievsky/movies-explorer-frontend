@@ -3,8 +3,12 @@
 }
 
 .movies-card__poster {
-  max-height: 151px;
+  height: 151px;
   width: 100%;
+}
+
+.movies-card__poster:hover {
+  cursor: pointer;
 }
 
 .movies-card__info {
@@ -62,7 +66,7 @@
   }
 
   .movies-card__poster {
-    max-height: 190px;
+    height: 190px;
   }
 }
 
@@ -73,7 +77,7 @@
 
   .movies-card__poster {
     object-fit: cover;
-    max-height: 168px;
+    height: 168px;
   }
 
   .movies-card__title {

@@ -8,13 +8,13 @@ export default function Header(props) {
       <Route exact path='/'>
         <header className='header header_main'>
           <img src={logo} alt='Логотип Movie-Explorer' className='header__logo' />
-          <Navigation />
+          <Navigation setMobileNav={props.setMobileNav} loggedIn={props.loggedIn} />
         </header>
       </Route>
-      <Route path='/:route'>
+      <Route exact path={['/profile', '/movies', '/saved-movies']}>
         <header className='header'>
           <img src={logo} alt='Логотип Movie-Explorer' className='header__logo' />
-          <Navigation setMobileNav={props.setMobileNav} />
+          <Navigation setMobileNav={props.setMobileNav} loggedIn={props.loggedIn} />
         </header>
       </Route>
     </>

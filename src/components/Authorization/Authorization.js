@@ -7,9 +7,12 @@ export default function Login(props) {
       <div className='authorization'>
         <img src={logo} alt='Логотип сайта' className='authorization__logo' />
         <h1 className='authorization__title'>{props.title}</h1>
-        <form className='authorization__form'>
+        <form className='authorization__form' onSubmit={props.handleSubmit}>
           {props.children}
-          <button type='submit' className='authorization__submit-button'>{props.submitButtonText}</button>
+          <button type='submit' className={`authorization__submit-button ${ !props.isValid && `authorization__submit-button_disabled` }`}
+          disabled={ !props.isValid }>
+            {props.submitButtonText}
+          </button>
         </form>
         <div className='authorization__link-container'>
           <p className='authorization__link-caption'>{props.linkCaption}</p>
