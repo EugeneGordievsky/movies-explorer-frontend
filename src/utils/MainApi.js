@@ -1,13 +1,17 @@
 const BASE_URL = 'https://api.eugene.gordievsky.students.nomoreparties.space';
 
-const checkResponse = (result) => {
+async function checkResponse (result) {
+  const res = await result.json();
+
   if (result.ok) {
-    return result.json();
+    return res;
+  } else {
+    return Promise.reject(res)
   }
-  return Promise.reject(`Произошла ошибка: ${result.status}:${result.statusText}`)
 }
 
-const register = (email, password, name) => {
+
+export const register = (email, password, name) => {
   return fetch(BASE_URL + '/signup', {
     method: 'POST',
     headers: {
@@ -22,7 +26,7 @@ const register = (email, password, name) => {
     .then((res) => checkResponse(res))
 };
 
-const login = (email, password) => {
+export const login = (email, password) => {
   return fetch(BASE_URL + '/signin', {
     method: 'POST',
     headers: {
@@ -36,7 +40,7 @@ const login = (email, password) => {
     .then((res) => checkResponse(res))
 }
 
-const getUserInfo = (token) => {
+export const getUserInfo = (token) => {
   return fetch(BASE_URL + '/users/me', {
     method: 'GET',
     headers: {
@@ -47,7 +51,7 @@ const getUserInfo = (token) => {
   .then((res) => checkResponse(res))
 }
 
-const updateUserInfo = (email, name) => {
+export const updateUserInfo = (email, name) => {
   return fetch(BASE_URL + '/users/me', {
     method: 'PATCH',
     headers: {
@@ -62,7 +66,7 @@ const updateUserInfo = (email, name) => {
     .then((res) => checkResponse(res))
 }
 
-const getSavedMovies = () => {
+export const getSavedMovies = () => {
   return fetch(BASE_URL + '/movies', {
     method: 'GET',
     headers: {
@@ -73,4 +77,37 @@ const getSavedMovies = () => {
     .then((res) => checkResponse(res))
 }
 
-module.exports = { register, login, getUserInfo, updateUserInfo, getSavedMovies }
+export const removeMovie = (movieId) => {
+  return fetch(BASE_URL + '/movies/' + movieId, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    },
+  })
+    .then((res) => checkResponse(res))
+}
+
+export const saveMovie = (movie) => {
+  return fetch(BASE_URL + '/movies', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    },
+    body: JSON.stringify({
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: movie.image,
+      trailer: movie.trailer,
+      thumbnail: movie.thumbnail,
+      movieId: movie.movieId,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+    })
+  })
+    .then((res) => checkResponse(res))
+}

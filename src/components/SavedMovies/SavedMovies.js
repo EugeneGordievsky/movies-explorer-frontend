@@ -4,25 +4,32 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 export default function SavedMovies(props) {
-  const [isShortFilm, setIsShortFilm] = React.useState(false);
+  const [isShort, setIsShort] = React.useState(false);
   const [inputWord, setInputWord] = React.useState('');
-  const [notFoundText, setNotFoundText] = React.useState('');
-  const [movies, setMovies] = React.useState([]);
 
-  React.useEffect(() => {
-    isShortFilm ?
-      setMovies(props
-        .moviesList
-        .filter((m) => m.duration <= 40)) :
-      setMovies(props
-        .moviesList)
-  }, [isShortFilm, props.moviesList])
+  const onSubmitForm = () => {
+    props.getSavedMoviesList(inputWord, isShort);
+  }
 
   return (
     <>
-      <SearchForm setIsShortFilm={setIsShortFilm} setInputWord={setInputWord} inputWord={inputWord} />
-      { props.isLoading ? <Preloader /> : <MoviesCardList moreButton='true'
-        moviesList={movies} notFoundText={notFoundText} /> }
+      <SearchForm
+        setIsShort={setIsShort}
+        setInputWord={setInputWord}
+        inputWord={inputWord}
+        onSubmitForm={onSubmitForm}/>
+      { props.isLoading ?
+        <Preloader /> :
+        <MoviesCardList
+          moreButton={false}
+          moviesList={
+            isShort ?
+            props.savedMovies.filter((m) => m.duration <= 40) :
+            props.savedMovies
+          }
+          resultBlockText={props.resultBlockText}
+          handleDeleteMovie={props.handleDeleteMovie}/>
+      }
     </>
   )
 }

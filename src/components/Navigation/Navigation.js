@@ -1,5 +1,5 @@
 import profileLogo from '../../images/profile-logo.svg';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 
 export default function Navigation(props) {
   const location = useLocation().pathname;
@@ -9,32 +9,39 @@ export default function Navigation(props) {
         <button className={`navigation__mobile-button ${ location === '/' && `navigation__mobile-button_hidden` }`} onClick={() => {
           props.setMobileNav(true);
         }} />
-        <ul className={`navigation ${ !props.loggedIn && location === '/' && `navigation_main` }`}>
+        <ul className={`navigation ${ !props.loggedIn && location === '/' && `navigation_main` }
+          ${ props.loggedIn && location === '/' && `navigation_visible`}`}>
           { props.loggedIn ? <>
             <li className='navigation__list-element'>
-              <Link to='./movies' className={`${ location !== '/' ? `navigation__link` : `navigation__main-link` }
-                ${ location === '/movies' && `navigation__link_active` }`}>
+              <NavLink
+                to='./movies'
+                className={`${ location !== '/' ? `navigation__link` : `navigation__main-link` }`}
+                activeClassName='navigation__link_active'>
                 Фильмы
-              </Link>
+              </NavLink>
             </li>
             <li className='navigation__list-element'>
-              <Link to='./saved-movies' className={`${ location !== '/' ? `navigation__link` : `navigation__main-link` }
-                ${ location === '/saved-movies' && `navigation__link_active` }`}>
+              <NavLink
+                to='./saved-movies'
+                className={`${ location !== '/' ? `navigation__link` : `navigation__main-link` }`}
+                activeClassName='navigation__link_active'>
                 Сохраненные фильмы
-              </Link>
+              </NavLink>
             </li>
             <li className='navigation__list-element'>
-              <Link to='./profile' className={`${ location !== '/' ? `navigation__link` : `navigation__main-link` }
-                ${ location === '/profile' && `navigation__link_active` } navigation__link_profile`}>
+              <NavLink
+                to='./profile'
+                className={`${ location !== '/' ? `navigation__link` : `navigation__main-link` } navigation__link_profile`}
+                activeClassName='navigation__link_active'>
                 Аккаунт
                 <img src={profileLogo} alt='Логотип профиля' className='navigation__profile-logo' />
-              </Link>
+              </NavLink>
             </li>
           </> : <>
             <li className='navigation__list-element navigation__list-element_main'>
-              <Link to='./signup' className='navigation__main-link'>
+              <NavLink to='./signup' className='navigation__main-link'>
                 Регистрация
-              </Link>
+              </NavLink>
             </li>
             <li className='navigation__list-element navigation__list-element_main'>
               <Link to='./signin' className='navigation__main-link navigation__main-link_signin'>

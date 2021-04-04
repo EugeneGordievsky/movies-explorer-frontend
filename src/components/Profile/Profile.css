@@ -51,8 +51,16 @@
   outline: none;
 }
 
+.profile__submit-error {
+  margin: 200px auto 0;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  color: #FF004C;
+}
+
 .profile__submit-button {
-  margin: 220px auto 0;
+  margin: 20px auto 0;
   padding: 15px 0 13px;
   width: 410px;
   background-color: #ff6838;
@@ -115,11 +123,11 @@
     padding: 236px 0 269px;
   }
 
-  .profile__edit-button {
-    margin: 210px auto 0;
+  .profile__submit-error {
+    margin: 190px auto 0;
   }
 
-  .profile__submit-button {
+  .profile__edit-button {
     margin: 210px auto 0;
   }
 }
@@ -133,9 +141,12 @@
     width: 260px;
   }
 
+  .profile__submit-error {
+    margin: 349px auto 0;
+  }
+
   .profile__submit-button {
     width: 260px;
-    margin: 379px auto 0;
   }
 
   .profile__edit-button {

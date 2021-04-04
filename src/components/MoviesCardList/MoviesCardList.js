@@ -1,22 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 export default function MoviesCardList(props) {
-  const [showCards, setShowCards] = React.useState(0);
-  const [addCards, setAddCards] = React.useState(0);
+  const location = useLocation();
 
-  React.useEffect(() => {
-    if (window.innerWidth > 1136) {
-      setShowCards(12);
-      setAddCards(3);
-    } else if (window.innerWidth < 1137 && window.innerWidth > 650) {
-      setShowCards(8);
-      setAddCards(2);
-    } else {
-      setShowCards(5);
-      setAddCards(2);
-    }
-  }, [])
+  const [showCards, setShowCards] = React.useState(window.innerWidth > 1136 ? 12 : window.innerWidth > 650 ? 8 : 5 );
+  const [addCards, setAddCards] = React.useState(window.innerWidth > 1136 ? 3 : 2);
 
   window.onresize = () => {
     if (window.innerWidth > 1136) {
@@ -29,16 +19,40 @@ export default function MoviesCardList(props) {
   return (
     <section className='movies-card-list'>
       { props.moviesList.length === 0 ?
-        <p className='movies-card-list__not-found'>{props.notFoundText}</p> :
+        <p className='movies-card-list__not-found'>
+          {props.resultBlockText}
+        </p> :
         <div className='movies-card-list__container' >
-          {props.moviesList.slice(0, showCards).map((movie) => <MoviesCard key={movie.id} movie={movie} />)}
+          {
+            location.pathname === '/movies' ?
+            props.moviesList
+              .slice(0, showCards)
+              .map((movie) => <MoviesCard
+                key={movie.movieId}
+                movie={movie}
+                saved={props.savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId)}
+                savedMovies={props.savedMovies}
+                handleDeleteMovie={props.handleDeleteMovie}
+                handleSaveMovie={props.handleSaveMovie}/>)
+            :
+            props.moviesList
+              .map((movie) => <MoviesCard
+                  key={movie.movieId}
+                  movie={movie}
+                  handleDeleteMovie={props.handleDeleteMovie}
+                  handleSaveMovie={props.handleSaveMovie}/>)
+          }
         </div>
       }
-      <button type='button' className={`movies-card-list__more-button
-        ${ showCards >= props.moviesList.length && `movies-card-list__more-button_hidden` }`}
-        onClick={() => setShowCards(showCards + addCards)}>
-        Ещё
-      </button>
+      {
+        props.moreButton &&
+        <button type='button' className={`movies-card-list__more-button
+          ${ showCards >= props.moviesList.length && `movies-card-list__more-button_hidden` }`}
+          onClick={() => setShowCards(showCards + addCards)}>
+          Ещё
+        </button>
+      }
+
     </section>
   )
 }

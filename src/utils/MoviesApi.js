@@ -5,7 +5,7 @@ const checkResponse = (result) => {
   return Promise.reject(`Произошла ошибка: ${result.status}:${result.statusText}`)
 }
 
-const getMovies = () => {
+export const getMovies = () => {
   return fetch('https://api.nomoreparties.co/beatfilm-movies', {
     method: 'GET',
     headers : {
@@ -14,5 +14,3 @@ const getMovies = () => {
   })
     .then((res) => checkResponse(res))
 }
-
-module.exports = { getMovies }

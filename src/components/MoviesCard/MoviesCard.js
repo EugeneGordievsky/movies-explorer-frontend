@@ -1,42 +1,60 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function MoviesCard(props) {
-  const [isLike, setLike] = React.useState(false);
+  const location = useLocation();
+  const [isLike, setLike] = React.useState(props.saved);
   const {
-    nameRU,
     duration,
+    nameRU,
     image,
-    trailerLink,
+    trailer,
+    movieId
   } = props.movie;
-
-  const calcDuration = () => {
-    if (duration < 60) {
-      return `${duration} мин`
-    } else if (duration > 60) {
-      return `${Math.floor(duration / 60)} ч ${duration % 60} мин`
-    } else {
-      return `${duration / 60} ч`
-    }
-  }
 
   return (
     <div className='movies-card'>
-      <img src={`https://api.nomoreparties.co${image.url}`} alt={image.alternativeText} className='movies-card__poster'
-        onClick={() => {
-          return window.open(trailerLink)
-        }}
-        />
-      <div className='movies-card__info'>
-        <p className='movies-card__title'>{nameRU}</p>
-        <button className={`movies-card__like-button ${ isLike && `movies-card__like-button_active`}`} type='button' onClick={() => {
-          if (isLike) {
-            setLike(false)
-          } else {
-            setLike(true)
+        <img
+          src={image}
+          alt='Постер фильма'
+          className='movies-card__poster'
+          onClick={() => {
+            return window.open(trailer)
+          }}/>
+        <div className='movies-card__info'>
+          <p className='movies-card__title'>
+            {nameRU}
+          </p>
+          {
+            location.pathname === '/movies' ?
+              <button className={`movies-card__like-button ${ isLike && `movies-card__like-button_active`}`}
+                type='button'
+                onClick={() => {
+                if (isLike) {
+                  const id = props.savedMovies.find((movie) => movie.movieId === movieId)._id;
+
+                  props.handleDeleteMovie(id);
+                  setLike(false);
+                } else {
+                  props.handleSaveMovie(props.movie);
+                  setLike(true)
+                }
+              }} /> :
+              <button
+                className={'movies-card__delete-button'}
+                type='button'
+                onClick={() => {
+                  props.handleDeleteMovie(props.movie._id);
+                }}/>
           }
-        }} />
-      </div>
-      <p className='movies-card__duration'>{calcDuration()}</p>
+        </div>
+        <p className='movies-card__duration'>
+          { duration % 60 === 0 ?
+            `${duration / 60} ч` : duration > 60 ?
+            `${Math.floor(duration / 60)} ч ${duration % 60} мин` :
+            `${duration} мин`
+          }
+        </p>
     </div>
   )
 }

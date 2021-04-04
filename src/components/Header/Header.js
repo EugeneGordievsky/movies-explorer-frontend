@@ -7,7 +7,7 @@ export default function Header(props) {
     <>
       <Route exact path='/'>
         <header className='header header_main'>
-          <img src={logo} alt='Логотип Movie-Explorer' className='header__logo' />
+          <img src={logo} alt='Логотип Movie-Explorer' className='header__logo'/>
           <Navigation setMobileNav={props.setMobileNav} loggedIn={props.loggedIn} />
         </header>
       </Route>

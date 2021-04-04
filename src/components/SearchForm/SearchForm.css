@@ -10,6 +10,10 @@
   justify-content: space-between;
 }
 
+.search-form__find_focus {
+  border-bottom-color: #ff6838;
+}
+
 .search-form__input {
   font-weight: normal;
   font-size: 28px;
@@ -27,6 +31,7 @@
   height: 34px;
   border: none;
   border-radius: 50%;
+  outline: none;
 }
 
 .search-form__find-button:hover {

@@ -41,15 +41,26 @@
 
 .movies-card__like-button:hover {
   cursor: pointer;
-  background-image: url('../../images/like-icon-active.svg');
 }
 
 .movies-card__like-button_active {
   background-image: url('../../images/like-icon-active.svg');
 }
 
-.movies-card__like-button_active:hover {
-  background-image: url('../../images/like-icon-active-hover.svg');
+.movies-card__delete-button {
+  background-image: url('../../images/delete-card-icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  outline: none;
+}
+
+.movies-card__delete-button:hover {
+  cursor: pointer;
 }
 
 .movies-card__duration {
