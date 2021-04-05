@@ -23,26 +23,28 @@ import {
 } from '../../utils/MainApi';
 import { getMovies } from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { SHORT_MOVIE_DURATION } from '../../utils/constants';
 
 function App() {
   const history = useHistory();
   const location = useLocation().pathname;
 
+  const [isError, setIsError] = React.useState(false);
   const [isLoadingLogin, setIsLoadingLogin] = React.useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = React.useState(false);
   const [isLoadingRegister, setIsLoadingRegister] = React.useState(false);
   const [isLoadingSavedMovies, setIsLoadingSavedMovies] = React.useState(false);
   const [isLoadingMoviesList, setIsLoadingMoviesList] = React.useState(false);
-  const [isErrorPopup, setIsErrorPopup] = React.useState(false);
-  const [errorText, setErrorText] = React.useState('');
+  const [isInfoPopup, setIsInfoPopup] = React.useState(false);
+  const [infoPopupText, setInfoPopupText] = React.useState('');
   const [errorUpdateUser, setErrorUpdateUser] = React.useState('');
   const [editProfile, setEditProfile] = React.useState(false);
   const [isMobileNav, setMobileNav] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
-  const [resultBlockTextMovies, setResultBlockTextMovies] = React.useState('');
-  const [resultBlockTextSavedMovies, setResultBlockTextSavedMovies] = React.useState('');
+  const [resultBlockTextMovies, setResultBlockTextMovies] = React.useState('Введите ключевое слово');
+  const [resultBlockTextSavedMovies, setResultBlockTextSavedMovies] = React.useState('Введите ключевое слово');
   const [currentUser, setCurrentUser] = React.useState({
   name: '',
   email: '',
@@ -109,30 +111,27 @@ function App() {
       .finally(() => setIsLoadingMoviesList(false));
   }
 
-  // Функция получения сохраненных фильмов и их фильтрации
+  // Функция фильтрации сохраненных фильмов
   const getSavedMoviesList = (word, short) => {
-    setIsLoadingSavedMovies(true);
-    getSavedMovies()
-      .then((movies) => {
-        if (word === '') {
-          setSavedMovies(movies);
-        } else {
-          const filteredMovies = filterMovies(movies, word, short);
+    const movies = JSON.parse(localStorage.getItem('savedMovies'));
 
-          setResultBlockTextSavedMovies('Ничего не найдено');
-          setSavedMovies(filteredMovies);
-        }
-      })
-      .catch((err) => setResultBlockTextSavedMovies(err.message))
-      .finally(() => setIsLoadingSavedMovies(false));
+    if (word === '') {
+      setSavedMovies(movies);
+    } else {
+      const filteredMovies = filterMovies(movies, word, short);
+
+      setResultBlockTextSavedMovies('Ничего не найдено');
+      setSavedMovies(filteredMovies);
+    }
   }
 
   // Функция фильтрации фильмов
   const filterMovies = (movies, word, short) => {
     const filterRegex = new RegExp(word, 'gi');
+
     return movies.filter((movie) => {
         if (short) {
-          return movie.duration <= 40 && filterRegex.test(movie.nameRU)
+          return movie.duration <= SHORT_MOVIE_DURATION && filterRegex.test(movie.nameRU)
         } else {
           return filterRegex.test(movie.nameRU)
         }
@@ -144,11 +143,13 @@ function App() {
     setIsLoadingRegister(true);
     register(email, password, name)
       .then(() => {
+        history.push('./signin');
         onLogin(email, password);
       })
       .catch((err) => {
-        setErrorText(err.message)
-        setIsErrorPopup(true);
+        setInfoPopupText(err.message);
+        setIsError(true);
+        setIsInfoPopup(true);
       })
       .finally(() => setIsLoadingRegister(false));
   }
@@ -161,13 +162,18 @@ function App() {
         if(res.token) {
           localStorage.setItem('jwt', res.token);
         }
-        setLoggedIn(true)
+        setMoviesList([]);
+        setResultBlockTextMovies('Введите ключевое слово');
+        localStorage.removeItem('movies');
+        localStorage.removeItem('savedMovies');
+        setLoggedIn(true);
         setCurrentUser(res.user);
         history.push('./movies');
       })
       .catch((err) => {
-        setErrorText(err.message)
-        setIsErrorPopup(true);
+        setInfoPopupText(err.message);
+        setIsError(true);
+        setIsInfoPopup(true);
       })
       .finally(() => setIsLoadingLogin(false));
   }
@@ -179,6 +185,8 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setEditProfile(false);
+        setIsError(false);
+        setIsInfoPopup(true);
       })
       .catch((err) => {
         setErrorUpdateUser(err.message);
@@ -190,19 +198,23 @@ function App() {
   const onSignOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
+    localStorage.removeItem('savedMovies');
+    setMoviesList([]);
+    setResultBlockTextMovies('Введите ключевое слово');
     setLoggedIn(false);
-    history.push('./');
     setCurrentUser({
       name: '',
       email: '',
     })
+    history.push('./');
   }
 
   // Функция сохранения карточки
   const handleSaveMovie = (movie) => {
     saveMovie(movie)
       .then((newMovie) => {
-        setSavedMovies([...savedMovies, newMovie])
+        setSavedMovies([...savedMovies, newMovie]);
+        localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, newMovie]));
       })
       .catch((err) => console.log(err.message))
   }
@@ -219,8 +231,8 @@ function App() {
 
   // Закрытие попапа с ошибкой
   const closeErrorPopup = () => {
-    setErrorText('');
-    setIsErrorPopup(false);
+    setInfoPopupText('');
+    setIsInfoPopup(false);
   }
 
   // Получение списка фильмов из локального хранилища
@@ -235,8 +247,6 @@ function App() {
 
   // Получение списка сохраненных фильмов при авторизации
   React.useEffect(() => {
-    const localStorageMovies = JSON.parse(localStorage.getItem('movies'));
-
     setIsLoadingSavedMovies(true);
     if (loggedIn) {
       getSavedMovies()
@@ -246,9 +256,6 @@ function App() {
           setIsLoadingSavedMovies(false);
         })
         .catch((err) => console.log(err.message));
-      if (localStorageMovies) {
-        setMoviesList(localStorageMovies);
-      }
     }
   }, [loggedIn]);
 
@@ -330,8 +337,9 @@ function App() {
         </Switch>
         <Footer />
         <ErrorPopup
-          errorText={errorText}
-          isErrorPopup={isErrorPopup}
+          infoPopupText={infoPopupText}
+          isInfoPopup={isInfoPopup}
+          isError={isError}
           closeErrorPopup={closeErrorPopup}/>
         <MobileNav
           setMobileNav={setMobileNav}

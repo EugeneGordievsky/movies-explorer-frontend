@@ -1,15 +1,16 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import { WINDOW_WIDTH } from '../../utils/constants';
 
 export default function MoviesCardList(props) {
   const location = useLocation();
 
-  const [showCards, setShowCards] = React.useState(window.innerWidth > 1136 ? 12 : window.innerWidth > 650 ? 8 : 5 );
-  const [addCards, setAddCards] = React.useState(window.innerWidth > 1136 ? 3 : 2);
+  const [showCards, setShowCards] = React.useState(window.innerWidth > WINDOW_WIDTH.LARGE ? 12 : window.innerWidth > WINDOW_WIDTH.MEDIUM ? 8 : 5 );
+  const [addCards, setAddCards] = React.useState(window.innerWidth > WINDOW_WIDTH.LARGE ? 3 : 2);
 
   window.onresize = () => {
-    if (window.innerWidth > 1136) {
+    if (window.innerWidth > WINDOW_WIDTH.LARGE) {
       setAddCards(3);
     } else {
       setAddCards(2);

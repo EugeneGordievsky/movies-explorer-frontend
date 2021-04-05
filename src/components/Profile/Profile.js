@@ -12,9 +12,15 @@ export default function Profile(props) {
   }
 
   React.useEffect(() => {
+    if (values['email'] === currentUser.email && values['name'] === currentUser.name) {
+      setIsValid(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values])
+
+  React.useEffect(() => {
     values['name'] = currentUser.name;
     values['email'] = currentUser.email;
-    setIsValid(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
@@ -91,6 +97,7 @@ export default function Profile(props) {
               value={ values['email'] }
               onChange={ handleChange }
               type='email'
+              pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
               required/>
           </div>
           <p className='profile__submit-error'>
