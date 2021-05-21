@@ -1,0 +1,17 @@
+.login {
+  padding: 70px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 1279px) {
+  .login {
+    padding: 232px 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .login {
+    padding: 56px 0 30px;
+  }
+}
