@@ -27,9 +27,18 @@
   outline: none;
 }
 
+.authorization__submit-button_disabled {
+  background-color: #a0a0a0;
+}
+
 .authorization__submit-button:hover {
   cursor: pointer;
   opacity: .8;
+}
+
+.authorization__submit-button_disabled:hover {
+  cursor: default;
+  opacity: 1;
 }
 
 .authorization__logo {

@@ -1,15 +1,24 @@
 .movies-card-list {
-  padding: 70px 70px 10px;
+  padding: 70px 0 10px;
   display: flex;
   flex-direction: column;
 }
 
 .movies-card-list__container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 270px);
+  grid-template-columns: repeat(3, 270px);
   justify-content: center;
   gap: 38px 20px;
-  margin: 0 70px;
+  margin: 0;
+}
+
+.movies-card-list__not-found {
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 34px;
+  color: #000;
+  margin: 0 auto;
+  width: max-content;
 }
 
 .movies-card-list__more-button {
@@ -26,8 +35,13 @@
   outline: none;
 }
 
+.movies-card-list__more-button_hidden {
+  display: none;
+}
+
 .movies-card-list__more-button:hover {
   cursor: pointer;
+  border-color: #ff6838;
 }
 
 @media screen and (max-width: 1279px) {

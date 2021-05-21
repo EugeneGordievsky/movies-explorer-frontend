@@ -1,24 +1,13 @@
 import React from 'react';
 
-export default function FormElement({title, setInputValue, ...props}) {
-  const [validationErr, setValidationErr] = React.useState(false);
-  const [errMessage, setErrMessage] = React.useState('');
+export default function FormElement({title, error, ...props}) {
 
   return (
     <>
       <div className='form-element' >
         <p className='form-element__title'>{title}</p>
-        <input className={`form-element__input ${ validationErr && `form-element__input_err` }`} {...props} onChange={(evt) => {
-          setInputValue(evt.target.value);
-          if (!evt.target.validity.valid) {
-            setValidationErr(true);
-            setErrMessage(evt.target.validationMessage);
-          } else {
-            setValidationErr(false);
-            setErrMessage('');
-          }
-        }} />
-        <span className={`form-element__error ${ validationErr && `form-element__error_visible` }`}>{errMessage}</span>
+        <input className={`form-element__input ${ error && error !== '' && `form-element__input_err`}`} {...props} />
+        <span className={`form-element__error ${ error && error !== '' && `form-element__error_visible`}`}>{error}</span>
       </div>
     </>
   )
