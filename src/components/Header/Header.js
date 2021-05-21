@@ -1,5 +1,5 @@
 import logo from '../../images/logo.svg';
-import { NavLink, Route, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
 export default function Header(props) {
