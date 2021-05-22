@@ -6,13 +6,13 @@ export default function Portfolio() {
       <h2 className='portfolio__title'>Портфолио</h2>
       <ul className='portfolio__links'>
         <li className='portfolio__list-element'>
-          <a href='https://github.com/EugeneGordievsky/how-to-learn.git' className='portfolio__link'
+          <a href='https://eugenegordievsky.github.io/how-to-learn' className='portfolio__link'
             target='_blank' rel='noreferrer'>Статичный сайт
             <img src={linkCursor} alt='Указатель ссылки' className='portfolio__link-cursor' />
           </a>
         </li>
         <li className='portfolio__list-element'>
-          <a href='https://github.com/EugeneGordievsky/russian-travel.git' className='portfolio__link'
+          <a href='https://eugenegordievsky.github.io/russian-travel' className='portfolio__link'
             target='_blank' rel='noreferrer'>Адаптивный сайт
             <img src={linkCursor} alt='Указатель ссылки' className='portfolio__link-cursor' />
           </a>
